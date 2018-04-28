@@ -20,4 +20,4 @@ COPY backup.sh /etc/periodic/daily/backup
 # forward backup logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/backup.log
 
-CMD ['crond', '-l 2', '-f']
+CMD ["crond", "-l2", "-f"]
