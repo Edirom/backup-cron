@@ -12,12 +12,10 @@ RUN apk --update \
     add --no-cache  bash openssh-client rsync \
     && rm -rf /var/cache/apk/*
 
-# copy our backup script to the daily cron job
-# which will run at 2 AM.
-# NB: the script must not be suffixed with any extension name
-COPY backup.sh /etc/periodic/daily/backup
+COPY backup.sh /usr/local/bin/
 
 # forward backup logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/backup.log
 
-CMD ["crond", "-l2", "-f"]
+#CMD ["crond", "-l2", "-f"]
+ENTRYPOINT ["/usr/local/bin/backup.sh"]
