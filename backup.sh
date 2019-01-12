@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 ##############################################
 # Backup script, using rsync over SSH 
