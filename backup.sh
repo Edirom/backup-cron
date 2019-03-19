@@ -32,6 +32,14 @@ LOGFILE=/var/log/backup.log
 # lockfile location
 LOCKFILE=/var/run/$(basename $0).lock
 
+die() {
+    echo "an error occured! $1 Aborting."
+    rm $LOCKFILE 
+    exit 1
+}
+
+trap 'die' ERR
+
 # we expect the following parameters to be exported:
 #
 # * BACKUP_TARGET_HOST
@@ -43,8 +51,7 @@ for PARAM in BACKUP_TARGET_HOST BACKUP_TARGET_PATH BACKUP_SOURCE_PATH
 do 
     if [ -z "${!PARAM}" ]
     then
-        echo "ERROR: ${PARAM} not set. Aborting."
-        exit 1
+        die "${PARAM} not set."
     fi
 done
 
